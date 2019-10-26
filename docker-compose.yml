@@ -1,0 +1,25 @@
+version: '2'
+
+volumes:
+    resin-data:
+
+services:
+
+  wordpress:
+    image: arm32v7/wordpress
+    restart: always
+    ports:
+      - 80:80
+    environment:
+      WORDPRESS_DB_PASSWORD: password
+    volumes:
+      - 'resin-data:./html:/var/www/html'
+  mysql:
+    image: tobi312/rpi-mysql
+    restart: always
+    ports:
+    - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+    - 'resin-data:./wpdb:/var/lib/mysql/wordpress'
